@@ -9,6 +9,7 @@ import { TokenModule } from './token/token.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { PasswordModule } from './password/password.module';
 import { PostModule } from './post/post.module';
+import { CommentsModule } from './comments/comments.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -20,6 +21,7 @@ import { PostModule } from './post/post.module';
     TokenModule,
     PasswordModule,
     PostModule,
+    CommentsModule,
   ],
   controllers: [],
   providers: [],

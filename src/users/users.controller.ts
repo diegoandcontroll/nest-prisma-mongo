@@ -23,6 +23,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
+
     private readonly firebaseService: FirebaseService,
   ) {}
 

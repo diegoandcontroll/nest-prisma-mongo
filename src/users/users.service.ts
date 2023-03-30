@@ -62,32 +62,30 @@ export class UsersService {
 
   async findAll() {
     const users = await this.prisma.user.findMany({
-      select: {
-        password: false,
-        email: true,
-        image: true,
-        username: true,
-        id: true,
+      include: {
+        posts: true,
       },
     });
-    return users;
+    const usersMap = users.map((item) => {
+      const { password, ...rest } = item;
+      return rest;
+    });
+
+    return usersMap;
   }
 
   async findOne(id: string) {
     const user = await this.prisma.user.findFirst({
       where: { id },
-      select: {
-        password: false,
-        email: true,
-        image: true,
-        username: true,
-        id: true,
+      include: {
+        posts: true,
       },
     });
     if (!user) {
       throw new HttpException('NOT FOUND USER', HttpStatus.NOT_FOUND);
     }
-    return user;
+    const { password, ...rest } = user;
+    return { user: rest };
   }
 
   async findEmail(email: string) {

@@ -3,7 +3,7 @@ import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { TokenService } from 'src/token/token.service';
-import { User } from '@prisma/client';
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -18,12 +18,10 @@ export class AuthService {
     const user = await this.usersService.findEmail(email);
     const hashByPass = await bcrypt.compare(pass, user.password);
     if (!hashByPass) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Email or password incorrect');
     }
     const payload = { username: user.username, sub: user.id };
     const { password, ...result } = user;
-    // TODO: Generate a JWT and return it here
-    // instead of the user object
     const token = await this.jwtService.signAsync(payload);
     await this.tokenService.saveToken(token, user.email);
     return {
@@ -32,12 +30,12 @@ export class AuthService {
     };
   }
 
-  async login(user: User) {
-    const userFind = await this.usersService.findEmail(user.email);
-    const payload = { username: user.email, sub: user.id };
+  async login(email: string, id: string) {
+    const userFind = await this.usersService.findEmail(email);
+    const payload = { username: email, sub: id };
     const token = this.jwtService.sign(payload);
     const { password, ...rest } = userFind;
-    await this.tokenService.saveToken(token, user.email);
+    await this.tokenService.saveToken(token, email);
     return {
       user: rest,
       access_token: token,

@@ -7,6 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { TokenModule } from './token/token.module';
 
 import { PrismaModule } from './prisma/prisma.module';
+import { PasswordModule } from './password/password.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -16,6 +17,7 @@ import { PrismaModule } from './prisma/prisma.module';
     UsersModule,
     AuthModule,
     TokenModule,
+    PasswordModule,
   ],
   controllers: [],
   providers: [],

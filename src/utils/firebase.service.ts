@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { firebaseAdmin as admin } from '../config/firabase.config';
+import { firebaseAdmin as admin } from '../config/firebase.config';
 import * as path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 

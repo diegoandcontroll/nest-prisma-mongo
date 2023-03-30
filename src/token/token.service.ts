@@ -55,6 +55,6 @@ export class TokenService {
       );
     }
     const user = await this.userService.findEmail(objToken.email);
-    return this.authService.login(user);
+    return this.authService.login(user.email, user.id);
   }
 }
